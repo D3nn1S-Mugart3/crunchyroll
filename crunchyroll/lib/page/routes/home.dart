@@ -15,7 +15,9 @@ class _HomePageState extends State<HomePage> {
   void navigateToDetails(){
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => VideoDemo()),
+      MaterialPageRoute(builder: (context) => VideoDemo(),
+      
+      ),
     );
   }
 
