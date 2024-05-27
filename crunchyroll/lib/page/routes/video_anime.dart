@@ -142,7 +142,7 @@ class _VideoDemoState extends State<VideoDemo> {
                                         SizedBox(width: 8),
                                         Text("1.4K", style: TextStyle(color: Colors.white)),
                                         Spacer(),
-                                        Icon(Icons.download_rounded, color: Colors.white),
+                                        Icon(Icons.file_download_outlined, color: Colors.white),
                                       ],
                                     ),
                                   ],

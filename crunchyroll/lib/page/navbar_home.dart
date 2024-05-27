@@ -49,7 +49,7 @@ class _BottonNavigationBar extends State<NavbarHome> {
             label: 'Mis listas',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.border_all_rounded),
+            icon: Icon(Icons.grid_view_outlined ),
             backgroundColor: Color.fromARGB(221, 1, 1, 1),
             label: 'Explorar',
           ),
