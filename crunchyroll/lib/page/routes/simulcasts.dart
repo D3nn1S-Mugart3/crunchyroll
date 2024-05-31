@@ -193,7 +193,7 @@ class AnimeCard extends StatelessWidget {
           Image.asset(
             anime.imageUrl,
             fit: BoxFit.cover,
-            height: 269,
+            height: 240,
             width: double.infinity,
           ),
           Padding(
