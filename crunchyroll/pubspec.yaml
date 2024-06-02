@@ -38,6 +38,7 @@ dependencies:
   flutter_svg: ^2.0.10+1
   video_player: ^2.8.6
   chewie: ^1.8.1
+  http: ^1.2.1
 
 dev_dependencies:
   flutter_test:

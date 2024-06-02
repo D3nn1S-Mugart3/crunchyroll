@@ -1,7 +1,8 @@
-import 'package:crunchyroll/page/routes/anime.dart';
-import 'package:crunchyroll/page/routes/video_anime.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import '../models/anime.dart';
+import '../services/api_service.dart';
+import 'video_anime.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -12,12 +13,18 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   bool isAddedToList = false;
+  late Future<Iterable<Anime>> _futureAnimes;
+
+  @override
+  void initState() {
+    super.initState();
+    _futureAnimes = getAnimeByRankingTypeApi(rankingType: 'all', limit: 10);
+  }
 
   void navigateToDetails() {
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => VideoDemo(),
-      ),
+      MaterialPageRoute(builder: (context) => VideoDemo()),
     );
   }
 
@@ -173,45 +180,60 @@ class _HomePageState extends State<HomePage> {
             ),
             SizedBox(height: 8), // Reduced spacing
             Container(
-              margin: EdgeInsets.symmetric(horizontal: 5),
-              height: 280, // Adjusted height for the recommendations
-              child: ListView.builder(
-                scrollDirection: Axis.horizontal,
-                itemCount: 10,
-                itemBuilder: (context, index) {
-                  return Container(
-                    width: 160, // Adjusted width for the recommendations
-                    margin: EdgeInsets.symmetric(horizontal: 4.0), // Reduced horizontal margin
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Image.asset(
-                          'assets/images/Kimetsu_no_Yaiba-cover.jpg', // Replace with a valid image URL
-                          height: 200, // Adjusted height for the image
-                          fit: BoxFit.cover,
-                        ),
-                        SizedBox(height: 4), // Reduced vertical spacing
-                        Text(
-                          'Anime Title ${index + 1}',
-                          style: TextStyle(fontSize: 16, color: Colors.white),
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              'Dob | Sub', style: TextStyle(fontSize: 14, color: Colors.grey),
-                            ),
-                            IconButton(
-                              icon: Icon(Icons.more_vert, color: Colors.grey),
-                              onPressed: () {
-                                // More options
-                              },
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  );
+              margin: EdgeInsets.symmetric(horizontal: 1),
+              height: 312, // Adjusted height for the recommendations
+              child: FutureBuilder<Iterable<Anime>>(
+                future: _futureAnimes,
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return Center(child: CircularProgressIndicator());
+                  } else if (snapshot.hasError) {
+                    return Center(child: Text('Error: ${snapshot.error}'));
+                  } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                    return Center(child: Text('No anime found'));
+                  } else {
+                    final animes = snapshot.data!;
+                    return ListView.builder(
+                      scrollDirection: Axis.horizontal,
+                      itemCount: animes.length,
+                      itemBuilder: (context, index) {
+                        final anime = animes.elementAt(index);
+                        return Container(
+                          width: 160, // Adjusted width for the recommendations
+                          margin: EdgeInsets.symmetric(horizontal: 0), // Reduced horizontal margin
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Image.network(
+                                anime.imageUrl,
+                                height: 210, // Adjusted height for the image
+                                fit: BoxFit.cover,
+                              ),
+                              SizedBox(height: 8), // Reduced vertical spacing
+                              Text(
+                                anime.title,
+                                style: TextStyle(fontSize: 14, color: Colors.white, fontWeight: FontWeight.bold),
+                              ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    'Dob | Sub', style: TextStyle(fontSize: 13, color: Colors.grey),
+                                  ),
+                                  IconButton(
+                                    icon: Icon(Icons.more_vert, color: Colors.grey),
+                                    onPressed: () {
+                                      // More options
+                                    },
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                        );
+                      },
+                    );
+                  }
                 },
               ),
             ),
@@ -280,14 +302,12 @@ class _HomePageState extends State<HomePage> {
   }
 }
 
-class DetailsPage extends StatelessWidget {
-  const DetailsPage({super.key});
-
-  @override 
+class AnimeDetailPage extends StatelessWidget {
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Details Page'),
+        title: Text('Anime Details'),
       ),
       body: Center(
         child: Text('Detalles del Anime'),
