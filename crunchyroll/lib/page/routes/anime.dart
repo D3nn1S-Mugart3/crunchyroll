@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class AnimeDetailPage extends StatelessWidget {
+class AnimePage extends StatelessWidget {
   final String animeName = "One Piece";
   final String seriesInfo = "Series ";
   final String seriesInfoDob = "• Dob | Sub";

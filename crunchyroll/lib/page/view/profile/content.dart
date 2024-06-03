@@ -1,36 +1,19 @@
 import 'package:flutter/material.dart';
 
-class Image_profile extends StatelessWidget {
-  const Image_profile({
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      height: 254,
-      decoration: BoxDecoration(
-        image: DecorationImage(
-          image: AssetImage('assets/fondo/colores.avif'), // Ruta de tu imagen
-          fit: BoxFit.cover,
-        ),
-      ),
-    );
-  }
-}
-
 class ContentProfile extends StatelessWidget {
-  const ContentProfile({super.key});
+  final String userName;
+
+  const ContentProfile({super.key, required this.userName});
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
         SizedBox(height: 20),
-        _buildArrowRow('Cambiar perfil', ' '),
+        _buildArrowRow('Cambiar perfil', ''),
         Divider(color: Colors.grey),
         SizedBox(height: 24),
-        _buildSectionTitle('Preferencia de contenido de usuario', color: Colors.grey),
+        _buildSectionTitle('Preferencia de contenido de $userName', color: Colors.grey),
         SizedBox(height: 20),
         _buildSwitchRow('Contenido para adultos', false),
         Divider(color: Colors.grey),
@@ -137,13 +120,13 @@ class ContentProfile extends StatelessWidget {
           style: TextStyle(fontSize: 15, color: Colors.white),
         ),
         Transform.scale(
-          scale: 0.7, // Ajusta el tamaño del switch
+          scale: 0.7,
           child: Switch(
             value: value,
             onChanged: (bool newValue) {},
-            activeColor: Colors.blue, // Color cuando el Switch está activado
-            inactiveThumbColor: Colors.grey[300], // Color del pulgar cuando el Switch está desactivado
-            inactiveTrackColor: Colors.grey[400], // Color de la pista cuando el Switch está desactivado
+            activeColor: Colors.blue,
+            inactiveThumbColor: Colors.grey[300],
+            inactiveTrackColor: Colors.grey[400],
           ),
         ),
       ],

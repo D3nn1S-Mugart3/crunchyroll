@@ -9,6 +9,13 @@ class GradientScrollView extends StatefulWidget {
 
 class _GradientScrollViewState extends State<GradientScrollView> {
   double _scrollOffset = 0;
+  String userName = 'Dennis';
+
+  void _updateUserName(String newName) {
+    setState(() {
+      userName = newName;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -46,7 +53,7 @@ class _GradientScrollViewState extends State<GradientScrollView> {
                         ),
                         Column(
                           children: [
-                            SizedBox(height: 70), // Espacio para ajustar la posición de la imagen de perfil
+                            SizedBox(height: 70),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
@@ -57,7 +64,7 @@ class _GradientScrollViewState extends State<GradientScrollView> {
                                       onTap: () {
                                         Navigator.push(
                                           context,
-                                          MaterialPageRoute(builder: (context) => EditProfile()),
+                                          MaterialPageRoute(builder: (context) => EditProfile(onSave: _updateUserName)),
                                         );
                                       },
                                       child: Container(
@@ -67,7 +74,7 @@ class _GradientScrollViewState extends State<GradientScrollView> {
                                           shape: BoxShape.circle,
                                           border: Border.all(color: Colors.white, width: 1.3),
                                           image: DecorationImage(
-                                            image: AssetImage('assets/images/luffy.jpg'), // Ruta de tu imagen
+                                            image: AssetImage('assets/images/luffy.jpg'),
                                             fit: BoxFit.cover,
                                           ),
                                         ),
@@ -92,7 +99,7 @@ class _GradientScrollViewState extends State<GradientScrollView> {
                             ),
                             SizedBox(height: 10),
                             Text(
-                              'Dennis',
+                              userName,
                               style: TextStyle(fontSize: 16, color: Colors.white),
                             ),
                             SizedBox(height: 20),
@@ -103,7 +110,7 @@ class _GradientScrollViewState extends State<GradientScrollView> {
                     Container(
                       color: Colors.black,
                       padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 20.0),
-                      child: const ContentProfile()
+                      child: ContentProfile(userName: userName),
                     ),
                   ],
                 ),
@@ -111,6 +118,23 @@ class _GradientScrollViewState extends State<GradientScrollView> {
             ),
           ),
         ],
+      ),
+    );
+  }
+}
+
+class Image_profile extends StatelessWidget {
+  const Image_profile({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 254,
+      decoration: BoxDecoration(
+        image: DecorationImage(
+          image: AssetImage('assets/fondo/colores.avif'),
+          fit: BoxFit.cover,
+        ),
       ),
     );
   }

@@ -1,8 +1,9 @@
+import 'package:crunchyroll/page/routes/anime.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import '../models/anime.dart';
 import '../services/api_service.dart';
-import 'video_anime.dart';
+import 'anime_detail_page.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -14,17 +15,24 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   bool isAddedToList = false;
   late Future<Iterable<Anime>> _futureAnimes;
+  late Future<Iterable<Anime>> _futurePopularAnimes;
 
   @override
   void initState() {
     super.initState();
     _futureAnimes = getAnimeByRankingTypeApi(rankingType: 'all', limit: 10);
+    _futurePopularAnimes = getAnimeByRankingTypeApi(rankingType: 'popular', limit: 10);
   }
 
-  void navigateToDetails() {
+  void navigateToDetails(Anime anime) {
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => VideoDemo()),
+      MaterialPageRoute(
+        builder: (context) => AnimeDetailPage(
+          animeName: anime.title,
+          animeImageUrl: anime.imageUrl,
+        ),
+      ),
     );
   }
 
@@ -72,30 +80,48 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       extendBodyBehindAppBar: true,
-      appBar: AppBar(
-        backgroundColor: _scrollOffset > 200 ? Colors.black : Colors.transparent,
-        elevation: 0,
-        leading: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: SvgPicture.asset(
-            'assets/icons/crunchyroll.svg',
-            color: Colors.orange,
-            width: 35,
-            height: 35,
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(kToolbarHeight),
+        child: Container(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              colors: [
+                Colors.black,
+                Colors.black38, 
+                Colors.black.withOpacity(0),
+                Colors.black.withOpacity(0),
+              ],
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              stops: [0.5, 0.6, 0.7, 0.5],
+            ),
+          ),
+          child: AppBar(
+            backgroundColor: Colors.transparent,
+            elevation: 0,
+            leading: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: SvgPicture.asset(
+                'assets/icons/crunchyroll.svg',
+                color: Colors.orange,
+                width: 35,
+                height: 35,
+              ),
+            ),
+            actions: <Widget>[
+              IconButton(
+                icon: const Icon(Icons.cast_outlined),
+                color: Colors.white,
+                onPressed: () {},
+              ),
+              IconButton(
+                icon: const Icon(Icons.search),
+                color: Colors.white,
+                onPressed: () {},
+              )
+            ],
           ),
         ),
-        actions: <Widget>[
-          IconButton(
-            icon: const Icon(Icons.cast_outlined),
-            color: Colors.white,
-            onPressed: () {},
-          ),
-          IconButton(
-            icon: const Icon(Icons.search),
-            color: Colors.white,
-            onPressed: () {},
-          )
-        ],
       ),
       backgroundColor: Colors.black,
       body: NotificationListener<ScrollNotification>(
@@ -113,7 +139,10 @@ class _HomePageState extends State<HomePage> {
               onTap: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => AnimeDetailPage()),
+                  MaterialPageRoute(builder: (context) => AnimeDetailPage(
+                    animeName: 'Kimetsu no Yaiba',
+                    animeImageUrl: 'https://m.media-amazon.com/images/I/61Zm2hsRJ0L._AC_SY879_.jpg',
+                  )),
                 );
               },
               child: Stack(
@@ -142,7 +171,10 @@ class _HomePageState extends State<HomePage> {
               onTap: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => AnimeDetailPage()),
+                  MaterialPageRoute(builder: (context) => AnimeDetailPage(
+                    animeName: 'Kimetsu no Yaiba',
+                    animeImageUrl: 'assets/images/Kimetsu_no_Yaiba-cover.jpg',
+                  )),
                 );
               },
               child: const Padding(
@@ -152,7 +184,7 @@ class _HomePageState extends State<HomePage> {
                   style: TextStyle(fontSize: 14, color: Colors.white),
                 ),
               ),
-            ), 
+            ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
@@ -169,7 +201,7 @@ class _HomePageState extends State<HomePage> {
                   icon: Icon(isAddedToList ? Icons.bookmark : Icons.bookmark_border, color: Colors.orange,)
                 ),
               ],
-            ), 
+            ),
             SizedBox(height: 16),
             Container(
               margin: EdgeInsets.symmetric(horizontal: 8),
@@ -178,10 +210,10 @@ class _HomePageState extends State<HomePage> {
                 style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.white),
               ),
             ),
-            SizedBox(height: 8), // Reduced spacing
+            SizedBox(height: 8),
             Container(
-              margin: EdgeInsets.symmetric(horizontal: 1),
-              height: 312, // Adjusted height for the recommendations
+              margin: EdgeInsets.symmetric(horizontal: 5),
+              height: 280,
               child: FutureBuilder<Iterable<Anime>>(
                 future: _futureAnimes,
                 builder: (context, snapshot) {
@@ -198,37 +230,114 @@ class _HomePageState extends State<HomePage> {
                       itemCount: animes.length,
                       itemBuilder: (context, index) {
                         final anime = animes.elementAt(index);
-                        return Container(
-                          width: 160, // Adjusted width for the recommendations
-                          margin: EdgeInsets.symmetric(horizontal: 0), // Reduced horizontal margin
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Image.network(
-                                anime.imageUrl,
-                                height: 210, // Adjusted height for the image
-                                fit: BoxFit.cover,
-                              ),
-                              SizedBox(height: 8), // Reduced vertical spacing
-                              Text(
-                                anime.title,
-                                style: TextStyle(fontSize: 14, color: Colors.white, fontWeight: FontWeight.bold),
-                              ),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Text(
-                                    'Dob | Sub', style: TextStyle(fontSize: 13, color: Colors.grey),
-                                  ),
-                                  IconButton(
-                                    icon: Icon(Icons.more_vert, color: Colors.grey),
-                                    onPressed: () {
-                                      // More options
-                                    },
-                                  ),
-                                ],
-                              ),
-                            ],
+                        return GestureDetector(
+                          onTap: () => navigateToDetails(anime),
+                          child: Container(
+                            width: 160,
+                            margin: EdgeInsets.symmetric(horizontal: 4.0),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Image.network(
+                                  anime.imageUrl,
+                                  height: 200,
+                                  fit: BoxFit.cover,
+                                ),
+                                SizedBox(height: 4),
+                                Text(
+                                  anime.title,
+                                  style: TextStyle(fontSize: 16, color: Colors.white),
+                                  overflow: TextOverflow.ellipsis,
+                                  maxLines: 1,
+                                ),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                      'Dob | Sub', style: TextStyle(fontSize: 14, color: Colors.grey),
+                                    ),
+                                    IconButton(
+                                      icon: Icon(Icons.more_vert, color: Colors.grey),
+                                      onPressed: () {
+                                        // More options
+                                      },
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                          ),
+                        );
+                      },
+                    );
+                  }
+                },
+              ),
+            ),
+            SizedBox(height: 16),
+            Container(
+              margin: EdgeInsets.symmetric(horizontal: 8),
+              child: Text(
+                'Populares',
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.white),
+              ),
+            ),
+            SizedBox(height: 8),
+            Container(
+              margin: EdgeInsets.symmetric(horizontal: 5),
+              height: 280,
+              child: FutureBuilder<Iterable<Anime>>(
+                future: _futurePopularAnimes,
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return Center(child: CircularProgressIndicator());
+                  } else if (snapshot.hasError) {
+                    return Center(child: Text('Error: ${snapshot.error}'));
+                  } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                    return Center(child: Text('No anime found'));
+                  } else {
+                    final animes = snapshot.data!;
+                    return ListView.builder(
+                      scrollDirection: Axis.horizontal,
+                      itemCount: animes.length,
+                      itemBuilder: (context, index) {
+                        final anime = animes.elementAt(index);
+                        return GestureDetector(
+                          onTap: () => navigateToDetails(anime),
+                          child: Container(
+                            width: 160,
+                            margin: EdgeInsets.symmetric(horizontal: 4.0),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Image.network(
+                                  anime.imageUrl,
+                                  height: 200,
+                                  fit: BoxFit.cover,
+                                ),
+                                SizedBox(height: 4),
+                                Text(
+                                  anime.title,
+                                  style: TextStyle(fontSize: 16, color: Colors.white),
+                                  overflow: TextOverflow.ellipsis,
+                                  maxLines: 1,
+                                ),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                      'Dob | Sub', style: TextStyle(fontSize: 14, color: Colors.grey),
+                                    ),
+                                    IconButton(
+                                      icon: Icon(Icons.more_vert, color: Colors.grey),
+                                      onPressed: () {
+                                        // More options
+                                      },
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
                           ),
                         );
                       },
@@ -239,13 +348,13 @@ class _HomePageState extends State<HomePage> {
             ),
             SizedBox(height: 16),
             GestureDetector(
-              onTap: navigateToDetails,
+              // onTap: navigateToDetails,
               child: Container(
                 margin: EdgeInsets.all(16.0),
-                height: 190, // Increased height for the video section
+                height: 190,
                 decoration: BoxDecoration(
                   image: DecorationImage(
-                    image: AssetImage('assets/images/Kimetsu_no_Yaiba-cover.jpg'), // Replace with a valid image URL
+                    image: AssetImage('assets/images/Kimetsu_no_Yaiba-cover.jpg'),
                     fit: BoxFit.cover,
                   ),
                   borderRadius: BorderRadius.circular(8.0),
@@ -297,20 +406,6 @@ class _HomePageState extends State<HomePage> {
             ),
           ],
         ),
-      ),
-    );
-  }
-}
-
-class AnimeDetailPage extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Anime Details'),
-      ),
-      body: Center(
-        child: Text('Detalles del Anime'),
       ),
     );
   }
