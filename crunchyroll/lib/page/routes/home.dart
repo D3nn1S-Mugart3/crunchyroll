@@ -1,4 +1,5 @@
 import 'package:crunchyroll/page/routes/anime.dart';
+import 'package:crunchyroll/page/routes/video_anime.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import '../models/anime.dart';
@@ -275,80 +276,85 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
             SizedBox(height: 16),
-            Container(
-              margin: EdgeInsets.symmetric(horizontal: 8),
-              child: Text(
-                'Populares',
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.white),
-              ),
-            ),
-            SizedBox(height: 8),
-            Container(
-              margin: EdgeInsets.symmetric(horizontal: 5),
-              height: 280,
-              child: FutureBuilder<Iterable<Anime>>(
-                future: _futurePopularAnimes,
-                builder: (context, snapshot) {
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return Center(child: CircularProgressIndicator());
-                  } else if (snapshot.hasError) {
-                    return Center(child: Text('Error: ${snapshot.error}'));
-                  } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-                    return Center(child: Text('No anime found'));
-                  } else {
-                    final animes = snapshot.data!;
-                    return ListView.builder(
-                      scrollDirection: Axis.horizontal,
-                      itemCount: animes.length,
-                      itemBuilder: (context, index) {
-                        final anime = animes.elementAt(index);
-                        return GestureDetector(
-                          onTap: () => navigateToDetails(anime),
-                          child: Container(
-                            width: 160,
-                            margin: EdgeInsets.symmetric(horizontal: 4.0),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Image.network(
-                                  anime.imageUrl,
-                                  height: 200,
-                                  fit: BoxFit.cover,
-                                ),
-                                SizedBox(height: 4),
-                                Text(
-                                  anime.title,
-                                  style: TextStyle(fontSize: 16, color: Colors.white),
-                                  overflow: TextOverflow.ellipsis,
-                                  maxLines: 1,
-                                ),
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Text(
-                                      'Dob | Sub', style: TextStyle(fontSize: 14, color: Colors.grey),
-                                    ),
-                                    IconButton(
-                                      icon: Icon(Icons.more_vert, color: Colors.grey),
-                                      onPressed: () {
-                                        // More options
-                                      },
-                                    ),
-                                  ],
-                                ),
-                              ],
-                            ),
-                          ),
-                        );
-                      },
-                    );
-                  }
-                },
-              ),
-            ),
+            // Container(
+            //   margin: EdgeInsets.symmetric(horizontal: 8),
+            //   child: Text(
+            //     'Populares',
+            //     style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.white),
+            //   ),
+            // ),
+            // SizedBox(height: 8),
+            // Container(
+            //   margin: EdgeInsets.symmetric(horizontal: 5),
+            //   height: 280,
+            //   child: FutureBuilder<Iterable<Anime>>(
+            //     future: _futurePopularAnimes,
+            //     builder: (context, snapshot) {
+            //       if (snapshot.connectionState == ConnectionState.waiting) {
+            //         return Center(child: CircularProgressIndicator());
+            //       } else if (snapshot.hasError) {
+            //         return Center(child: Text('Error: ${snapshot.error}'));
+            //       } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+            //         return Center(child: Text('No anime found'));
+            //       } else {
+            //         final animes = snapshot.data!;
+            //         return ListView.builder(
+            //           scrollDirection: Axis.horizontal,
+            //           itemCount: animes.length,
+            //           itemBuilder: (context, index) {
+            //             final anime = animes.elementAt(index);
+            //             return GestureDetector(
+            //               onTap: () => navigateToDetails(anime),
+            //               child: Container(
+            //                 width: 160,
+            //                 margin: EdgeInsets.symmetric(horizontal: 4.0),
+            //                 child: Column(
+            //                   crossAxisAlignment: CrossAxisAlignment.start,
+            //                   children: [
+            //                     Image.network(
+            //                       anime.imageUrl,
+            //                       height: 200,
+            //                       fit: BoxFit.cover,
+            //                     ),
+            //                     SizedBox(height: 4),
+            //                     Text(
+            //                       anime.title,
+            //                       style: TextStyle(fontSize: 16, color: Colors.white),
+            //                       overflow: TextOverflow.ellipsis,
+            //                       maxLines: 1,
+            //                     ),
+            //                     Row(
+            //                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            //                       children: [
+            //                         Text(
+            //                           'Dob | Sub', style: TextStyle(fontSize: 14, color: Colors.grey),
+            //                         ),
+            //                         IconButton(
+            //                           icon: Icon(Icons.more_vert, color: Colors.grey),
+            //                           onPressed: () {
+            //                             // More options
+            //                           },
+            //                         ),
+            //                       ],
+            //                     ),
+            //                   ],
+            //                 ),
+            //               ),
+            //             );
+            //           },
+            //         );
+            //       }
+            //     },
+            //   ),
+            // ),
             SizedBox(height: 16),
             GestureDetector(
-              // onTap: navigateToDetails,
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => VideoDemo()),
+                );
+              },
               child: Container(
                 margin: EdgeInsets.all(16.0),
                 height: 190,
