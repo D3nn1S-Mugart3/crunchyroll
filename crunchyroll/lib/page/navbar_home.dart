@@ -1,79 +1,150 @@
-import 'package:crunchyroll/page/routes/home.dart';
+import 'package:crunchyroll/page/view/home/home.dart';
+import 'package:flutter/material.dart';
 import 'package:crunchyroll/page/routes/my_list.dart';
 import 'package:crunchyroll/page/routes/profile.dart';
 import 'package:crunchyroll/page/routes/simulcasts.dart';
-import 'package:crunchyroll/page/view/home/home.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class NavbarHome extends StatefulWidget {
   const NavbarHome({super.key});
 
   @override
-  State<NavbarHome> createState() => _BottonNavigationBar();
+  State<NavbarHome> createState() => _NavbarHomeState();
 }
 
-class _BottonNavigationBar extends State<NavbarHome> {
-  int selecteditems = 0;
-  late List<Widget> itemLabels;
+class _NavbarHomeState extends State<NavbarHome> {
+  int selectedIndex = 0;
+  late List<Widget> pages;
 
   @override
   void initState() {
     super.initState();
-    itemLabels = [
-      Home_Page2(),
+    pages = [
+      const Home_Page2(),
       MyListAnime(),
       const Text("data"),
       SimulcastsScreen(),
-      GradientScrollView()
+      GradientScrollView(),
     ];
   }
 
-  void updateItems(int value) {
+  void onItemTapped(int index) {
     setState(() {
-      selecteditems = value;
+      selectedIndex = index;
+      // Feedback háptico al seleccionar un ítem
+      HapticFeedback.lightImpact();
     });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      body: IndexedStack(
+        index: selectedIndex,
+        children: pages,
+      ),
       bottomNavigationBar: BottomNavigationBar(
-        items: const [
+        items: [
           BottomNavigationBarItem(
-            icon: Icon(Icons.home_outlined),
-            backgroundColor: Color.fromARGB(221, 1, 1, 1),
+            icon: Stack(
+              children: [
+                Icon(Icons.home_outlined),
+                if (selectedIndex == 0)
+                  Positioned(
+                    bottom: -4,
+                    left: 0,
+                    right: 0,
+                    child: Container(
+                      height: 2,
+                      color: Colors.orange,
+                    ),
+                  ),
+              ],
+            ),
             label: 'Inicio',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.bookmark_border),
-            backgroundColor: Color.fromARGB(221, 1, 1, 1),
+            icon: Stack(
+              children: [
+                Icon(Icons.bookmark_border),
+                if (selectedIndex == 1)
+                  Positioned(
+                    bottom: -4,
+                    left: 0,
+                    right: 0,
+                    child: Container(
+                      height: 2,
+                      color: Colors.orange,
+                    ),
+                  ),
+              ],
+            ),
             label: 'Mis listas',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.grid_view_outlined ),
-            backgroundColor: Color.fromARGB(221, 1, 1, 1),
+            icon: Stack(
+              children: [
+                Icon(Icons.grid_view_outlined),
+                if (selectedIndex == 2)
+                  Positioned(
+                    bottom: -4,
+                    left: 0,
+                    right: 0,
+                    child: Container(
+                      height: 2,
+                      color: Colors.orange,
+                    ),
+                  ),
+              ],
+            ),
             label: 'Explorar',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.auto_awesome_outlined),
-            backgroundColor: Color.fromARGB(221, 1, 1, 1),
+            icon: Stack(
+              children: [
+                Icon(Icons.auto_awesome_outlined),
+                if (selectedIndex == 3)
+                  Positioned(
+                    bottom: -4,
+                    left: 0,
+                    right: 0,
+                    child: Container(
+                      height: 2,
+                      color: Colors.orange,
+                    ),
+                  ),
+              ],
+            ),
             label: 'Simulcasts',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.person_outline_outlined),
-            backgroundColor: Color.fromARGB(221, 1, 1, 1),
+            icon: Stack(
+              children: [
+                Icon(Icons.person_outline_outlined),
+                if (selectedIndex == 4)
+                  Positioned(
+                    bottom: -4,
+                    left: 0,
+                    right: 0,
+                    child: Container(
+                      height: 2,
+                      color: Colors.orange,
+                    ),
+                  ),
+              ],
+            ),
             label: 'Cuenta',
           ),
         ],
-        currentIndex: selecteditems,
-        onTap: updateItems,
+        currentIndex: selectedIndex,
+        onTap: onItemTapped,
         selectedItemColor: Colors.orange,
         unselectedItemColor: Colors.white,
-        selectedLabelStyle: const TextStyle(fontWeight: FontWeight.bold),
-        unselectedLabelStyle: const TextStyle(fontWeight: FontWeight.normal),
-      ),
-      body: Center(
-        child: itemLabels[selecteditems],
+        showUnselectedLabels: true,
+        backgroundColor: const Color.fromARGB(221, 1, 1, 1),
+        selectedLabelStyle: const TextStyle(fontWeight: FontWeight.normal, fontSize: 12),
+        unselectedLabelStyle: const TextStyle(fontWeight: FontWeight.normal, fontSize: 12),
+        type: BottomNavigationBarType.fixed, // Ensure consistent label sizes
       ),
     );
   }

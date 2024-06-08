@@ -1,5 +1,4 @@
 import 'package:crunchyroll/page/navbar_home.dart';
-import 'package:crunchyroll/page/view/home/home.dart';
 import 'package:flutter/material.dart';
 
 void main() {
