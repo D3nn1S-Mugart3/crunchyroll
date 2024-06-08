@@ -2,6 +2,7 @@ import 'package:crunchyroll/page/routes/home.dart';
 import 'package:crunchyroll/page/routes/my_list.dart';
 import 'package:crunchyroll/page/routes/profile.dart';
 import 'package:crunchyroll/page/routes/simulcasts.dart';
+import 'package:crunchyroll/page/view/home/home.dart';
 import 'package:flutter/material.dart';
 
 class NavbarHome extends StatefulWidget {
@@ -19,7 +20,7 @@ class _BottonNavigationBar extends State<NavbarHome> {
   void initState() {
     super.initState();
     itemLabels = [
-      const HomePage(),
+      Home_Page2(),
       MyListAnime(),
       const Text("data"),
       SimulcastsScreen(),
