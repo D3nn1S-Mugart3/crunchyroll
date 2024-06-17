@@ -1,3 +1,5 @@
+import 'package:crunchyroll/page/login/login_page.dart';
+import 'package:crunchyroll/page/login/register_page.dart';
 import 'package:crunchyroll/page/services/firebase/firebase_api.dart';
 import 'package:crunchyroll/page/services/firebase/firebase_options.dart';
 import 'package:crunchyroll/page/view/notification/notification.dart';
@@ -21,10 +23,13 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: const NavbarHome(),
+      home: const LoginPage(),
       navigatorKey: navigatorKey,
       routes: {
         '/notification_screen': (context) => const NotificationPage(),
+        '/home': (context) => const NavbarHome(),
+        '/register': (context) => const RegisterPage(),
+        '/login' : (context) => const LoginPage(),
       },
     );
   }
