@@ -1,9 +1,11 @@
-import 'package:crunchyroll/page/view/home/home.dart';
+import 'package:crunchyroll/page/routes/home.dart';
+// import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:crunchyroll/page/routes/my_list.dart';
 import 'package:crunchyroll/page/routes/profile.dart';
 import 'package:crunchyroll/page/routes/simulcasts.dart';
 import 'package:flutter/services.dart';
+// import 'package:shared_preferences/shared_preferences.dart';
 
 class NavbarHome extends StatefulWidget {
   const NavbarHome({super.key});
@@ -16,11 +18,18 @@ class _NavbarHomeState extends State<NavbarHome> {
   int selectedIndex = 0;
   late List<Widget> pages;
 
+  // Future<void> _logout(BuildContext context) async {
+  //   await FirebaseAuth.instance.signOut();
+  //   final prefs = await SharedPreferences.getInstance();
+  //   await prefs.setBool('isLoggedIn', false);
+  //   Navigator.pushReplacementNamed(context, '/login');
+  // }
+
   @override
   void initState() {
     super.initState();
     pages = [
-      const Home_Page2(),
+      const Home_Page(),
       MyListAnime(),
       const Text("data"),
       SimulcastsScreen(),

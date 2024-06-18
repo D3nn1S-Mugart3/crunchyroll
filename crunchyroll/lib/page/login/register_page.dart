@@ -73,14 +73,14 @@ class _RegisterPageState extends State<RegisterPage> {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Image.asset('assets/images/crunchyroll-logo.png', height: 35,), // Cambia la ruta a tu imagen
+              Image.asset('assets/images/crunchyroll-logo.png', height: 37,), // Cambia la ruta a tu imagen
               const SizedBox(height: 35),
               TextField(
                 controller: _emailController,
                 style: const TextStyle(color: Colors.white),
                 decoration: InputDecoration(
                   labelText: 'Email',
-                  labelStyle: const TextStyle(color: Colors.orange),
+                  labelStyle: const TextStyle(color: Colors.white),
                   filled: true,
                   fillColor: Colors.grey[900],
                   border: OutlineInputBorder(
@@ -103,7 +103,7 @@ class _RegisterPageState extends State<RegisterPage> {
                 obscureText: true,
                 decoration: InputDecoration(
                   labelText: 'Contraseña',
-                  labelStyle: const TextStyle(color: Colors.orange),
+                  labelStyle: const TextStyle(color: Colors.white),
                   filled: true,
                   fillColor: Colors.grey[900],
                   border: OutlineInputBorder(

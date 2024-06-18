@@ -1,9 +1,18 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ContentProfile extends StatelessWidget {
   final String userName;
 
   const ContentProfile({super.key, required this.userName});
+
+  Future<void> _logout(BuildContext context) async {
+    await FirebaseAuth.instance.signOut();
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setBool('isLoggedIn', false);
+    Navigator.pushReplacementNamed(context, '/login');
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -72,7 +81,18 @@ class ContentProfile extends StatelessWidget {
         _buildSectionTitle('¿Necesitas ayuda?'),
         Divider(color: Colors.grey),
         SizedBox(height: 24),
-        _buildSectionTitle('Salir'),
+        GestureDetector(
+          onTap: () => _logout(context),
+          child: Row(
+            children: [
+              Text(
+                "Salir",
+                style: TextStyle(fontSize: 15, color: Colors.white),
+              ),
+            ],
+          ),
+        ),
+        // _buildSectionTitle('Salir'),
         SizedBox(height: 30),
         Center(
           child: Column(

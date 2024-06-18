@@ -1,5 +1,7 @@
 import 'package:crunchyroll/page/services/firebase/firebase_api.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
 
@@ -18,6 +20,8 @@ class _LoginPageState extends State<LoginPage> {
 
     final user = await FirebaseApi().login(email, password);
     if (user != null) {
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.setBool('isLoggedIn', true);
       Navigator.pushReplacementNamed(context, '/home');
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -69,7 +73,7 @@ class _LoginPageState extends State<LoginPage> {
               const SizedBox(height: 20),
               const Text(
                 '¡Te damos la bienvenida a Crunchyroll! Para acceder puedes usar tanto tu usuario de Crunchyroll como el de Funimation.',
-                style: TextStyle(color: Colors.white, fontSize: 14),
+                style: TextStyle(color: Colors.white, fontSize: 13),
                 textAlign: TextAlign.center,
               ),
               const SizedBox(height: 20),

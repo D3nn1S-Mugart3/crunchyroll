@@ -79,19 +79,11 @@ class FirebaseApi {
         email: email,
         password: password,
       );
-      SharedPreferences prefs = await SharedPreferences.getInstance();
-      await prefs.setBool('isLoggedIn', true);
       return userCredential.user;
     } catch (e) {
       print('Login Error: $e');
       return null;
     }
-  }
-
-  Future<void> logout() async {
-    await _auth.signOut();
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    await prefs.setBool('isLoggedIn', false);
   }
 }
 
