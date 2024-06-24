@@ -1,4 +1,5 @@
 import 'package:crunchyroll/page/routes/home.dart';
+import 'package:crunchyroll/page/routes/mangas_pdf.dart';
 // import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:crunchyroll/page/routes/my_list.dart';
@@ -31,7 +32,8 @@ class _NavbarHomeState extends State<NavbarHome> {
     pages = [
       const Home_Page(),
       MyListAnime(),
-      const Text("data"),
+      const Center(child: Text("Data"),),
+      MangasPDF(),
       SimulcastsScreen(),
       GradientScrollView(),
     ];
@@ -107,6 +109,24 @@ class _NavbarHomeState extends State<NavbarHome> {
               ],
             ),
             label: 'Explorar',
+          ),
+          BottomNavigationBarItem(
+            icon: Stack(
+              children: [
+                Icon(Icons.bookmark_border),
+                if (selectedIndex == 1)
+                  Positioned(
+                    bottom: -4,
+                    left: 0,
+                    right: 0,
+                    child: Container(
+                      height: 2,
+                      color: Colors.orange,
+                    ),
+                  ),
+              ],
+            ),
+            label: 'Mangas',
           ),
           BottomNavigationBarItem(
             icon: Stack(
