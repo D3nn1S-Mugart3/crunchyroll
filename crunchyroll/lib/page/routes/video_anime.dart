@@ -18,7 +18,7 @@ class _VideoDemoState extends State<VideoDemo> {
 
   @override
   void initState() {
-    _controller = VideoPlayerController.asset("assets/kimetsu.mp4");
+    _controller = VideoPlayerController.asset("assets/video/luffy.mp4");
     _initializeVideoPlayerFuture = _controller.initialize().then((_){
       setState(() {
         _chewieController = ChewieController(

@@ -17,7 +17,7 @@ class _NextEpisodePageState extends State<NextEpisodePage> {
 
   @override
   void initState() {
-    _controller = VideoPlayerController.asset("assets/One_Piece.mp4");
+    _controller = VideoPlayerController.asset("assets/video/One_Piece.mp4");
     _initializeVideoPlayerFuture = _controller.initialize().then((_) {
       setState(() {
         _chewieController = ChewieController(
