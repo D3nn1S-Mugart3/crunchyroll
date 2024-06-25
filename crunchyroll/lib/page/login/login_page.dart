@@ -30,6 +30,19 @@ class _LoginPageState extends State<LoginPage> {
     }
   }
 
+  void _loginWithGoogle() async {
+    final user = await FirebaseApi().signInWithGoogle();
+    if (user != null) {
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.setBool('isLoggedIn', true);
+      Navigator.pushReplacementNamed(context, '/home');
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Google Sign-In Failed')),
+      );
+    }
+  }
+
   void _updateButtonState() {
     setState(() {
       _isButtonEnabled = _emailController.text.isNotEmpty && _passwordController.text.isNotEmpty;
@@ -69,7 +82,7 @@ class _LoginPageState extends State<LoginPage> {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Image.asset('assets/images/crunfuni.png'), // Cambia la ruta a tu imagen
+              Image.asset('assets/images/crunfuni.png'),
               const SizedBox(height: 20),
               const Text(
                 '¡Te damos la bienvenida a Crunchyroll! Para acceder puedes usar tanto tu usuario de Crunchyroll como el de Funimation.',
@@ -158,13 +171,41 @@ class _LoginPageState extends State<LoginPage> {
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(2.0),
                   ),
-                  minimumSize: const Size.fromHeight(50), // Botón largo
+                  minimumSize: const Size.fromHeight(50),
                 ),
                 child: Text(
                   'ACCEDER',
                   style: TextStyle(
                     color: _isButtonEnabled ? Colors.black : Colors.grey,
                   ),
+                ),
+              ),
+              const SizedBox(height: 20),
+              ElevatedButton(
+                onPressed: _loginWithGoogle,
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.white,
+                  foregroundColor: Colors.black,
+                  padding: const EdgeInsets.symmetric(vertical: 16.0),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(2.0),
+                  ),
+                  minimumSize: const Size.fromHeight(50),
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Image.asset(
+                      'assets/images/Google_logo.png',
+                      height: 24.0,
+                      width: 24.0,
+                    ),
+                    const SizedBox(width: 10),
+                    const Text(
+                      'Sign in with Google',
+                      style: TextStyle(color: Colors.black),
+                    ),
+                  ],
                 ),
               ),
               const SizedBox(height: 20),

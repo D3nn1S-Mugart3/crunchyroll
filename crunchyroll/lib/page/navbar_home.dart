@@ -113,7 +113,7 @@ class _NavbarHomeState extends State<NavbarHome> {
           BottomNavigationBarItem(
             icon: Stack(
               children: [
-                Icon(Icons.bookmark_border),
+                Icon(Icons.menu_book_rounded),
                 if (selectedIndex == 1)
                   Positioned(
                     bottom: -4,
@@ -131,7 +131,7 @@ class _NavbarHomeState extends State<NavbarHome> {
           BottomNavigationBarItem(
             icon: Stack(
               children: [
-                Icon(Icons.auto_awesome_outlined),
+                Icon(Icons.bookmark_border),
                 if (selectedIndex == 3)
                   Positioned(
                     bottom: -4,
