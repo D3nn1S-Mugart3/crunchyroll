@@ -202,7 +202,7 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                     const SizedBox(width: 10),
                     const Text(
-                      'Sign in with Google',
+                      'Inicia sesión con Google',
                       style: TextStyle(color: Colors.black),
                     ),
                   ],
