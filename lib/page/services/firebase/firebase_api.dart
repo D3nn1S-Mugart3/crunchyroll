@@ -107,6 +107,16 @@ class FirebaseApi {
       return null;
     }
   }
+
+  // Logout
+  Future<void> signOut() async {
+    // Sign out from Firebase
+    await _auth.signOut();
+
+    // Sign out from Google
+    final googleSignIn = GoogleSignIn();
+    await googleSignIn.signOut();
+  }
 }
 
 // Background message handler

@@ -2,10 +2,30 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class ContentProfile extends StatelessWidget {
+class ContentProfile extends StatefulWidget {
   final String userName;
 
   const ContentProfile({super.key, required this.userName});
+
+  @override
+  _ContentProfileState createState() => _ContentProfileState();
+}
+
+class _ContentProfileState extends State<ContentProfile> {
+  String _email = '';
+
+  @override
+  void initState() {
+    super.initState();
+    _getUserEmail();
+  }
+
+  Future<void> _getUserEmail() async {
+    User? user = FirebaseAuth.instance.currentUser;
+    setState(() {
+      _email = user?.email ?? 'Email not available';
+    });
+  }
 
   Future<void> _logout(BuildContext context) async {
     await FirebaseAuth.instance.signOut();
@@ -22,7 +42,7 @@ class ContentProfile extends StatelessWidget {
         _buildArrowRow('Cambiar perfil', ''),
         Divider(color: Colors.grey),
         SizedBox(height: 24),
-        _buildSectionTitle('Preferencia de contenido de $userName', color: Colors.grey),
+        _buildSectionTitle('Preferencia de contenido de ${widget.userName}', color: Colors.grey),
         SizedBox(height: 20),
         _buildSwitchRow('Contenido para adultos', false),
         Divider(color: Colors.grey),
@@ -43,7 +63,7 @@ class ContentProfile extends StatelessWidget {
         _buildArrowRow('Notificaciones', ''),
         Divider(color: Colors.grey),
         SizedBox(height: 20),
-        _buildArrowRow('Email', 'a.dennis.mugarte@gmail.com'),
+        _buildArrowRow('Email', _email),
         Divider(color: Colors.grey),
         SizedBox(height: 20),
         _buildArrowRow('Contraseña', ''),
