@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 
 class FirebaseApi {
   final FirebaseAuth _auth = FirebaseAuth.instance;
+  final GoogleSignIn _googleSignIn = GoogleSignIn();
   final FirebaseMessaging _firebaseMessaging = FirebaseMessaging.instance;
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
@@ -111,11 +112,12 @@ class FirebaseApi {
   // Logout
   Future<void> signOut() async {
     // Sign out from Firebase
-    await _auth.signOut();
-
-    // Sign out from Google
-    final googleSignIn = GoogleSignIn();
-    await googleSignIn.signOut();
+    try {
+      await _googleSignIn.signOut();
+      await _auth.signOut();
+    } catch (e) {
+      print('Sign Out Error: $e');
+    }
   }
 }
 

@@ -1,3 +1,4 @@
+import 'package:crunchyroll/page/services/firebase/firebase_api.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -28,7 +29,8 @@ class _ContentProfileState extends State<ContentProfile> {
   }
 
   Future<void> _logout(BuildContext context) async {
-    await FirebaseAuth.instance.signOut();
+    final firebaseApi = FirebaseApi();
+    await firebaseApi.signOut(); // Cierra sesión de Google y Firebase
     final prefs = await SharedPreferences.getInstance();
     await prefs.setBool('isLoggedIn', false);
     Navigator.pushReplacementNamed(context, '/login');
