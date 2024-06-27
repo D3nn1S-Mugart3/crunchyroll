@@ -1,5 +1,6 @@
 import 'package:crunchyroll/page/view/profile/content.dart';
 import 'package:crunchyroll/page/view/profile/edit_profile.dart';
+import 'package:crunchyroll/page/view/profile/image_profile.dart';
 import 'package:flutter/material.dart';
 
 class GradientScrollView extends StatefulWidget {
@@ -47,7 +48,7 @@ class _GradientScrollViewState extends State<GradientScrollView> {
                   children: [
                     Stack(
                       children: [
-                        Opacity(
+                        const Opacity(
                           opacity: 1,
                           child: Image_profile(),
                         ),
@@ -83,15 +84,23 @@ class _GradientScrollViewState extends State<GradientScrollView> {
                                     Positioned(
                                       right: 0,
                                       bottom: 0,
-                                      child: CircleAvatar(
-                                        radius: 15,
-                                        backgroundColor: Colors.white,
-                                        child: Icon(
-                                          Icons.edit_outlined,
-                                          size: 15,
-                                          color: Colors.black,
+                                      child: GestureDetector(
+                                        onTap: () {
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(builder: (context) => EditProfile(onSave: _updateUserName)),
+                                          );
+                                        },
+                                        child: const CircleAvatar(
+                                          radius: 15,
+                                          backgroundColor: Colors.white,
+                                          child: Icon(
+                                            Icons.edit_outlined,
+                                            size: 15,
+                                            color: Colors.black,
+                                          ),
                                         ),
-                                      ),
+                                      )
                                     ),
                                   ],
                                 ),
@@ -118,23 +127,6 @@ class _GradientScrollViewState extends State<GradientScrollView> {
             ),
           ),
         ],
-      ),
-    );
-  }
-}
-
-class Image_profile extends StatelessWidget {
-  const Image_profile({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      height: 254,
-      decoration: BoxDecoration(
-        image: DecorationImage(
-          image: AssetImage('assets/fondo/colores.avif'),
-          fit: BoxFit.cover,
-        ),
       ),
     );
   }

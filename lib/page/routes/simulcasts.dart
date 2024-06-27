@@ -257,11 +257,11 @@ class AnimeCard extends StatelessWidget {
             child: Image.network(
               anime.imageUrl,
               fit: BoxFit.cover,
-              width: double.infinity,
+              width: 147,
             ),
           ),
           Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: const EdgeInsets.all(7.5),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -271,7 +271,6 @@ class AnimeCard extends StatelessWidget {
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                 ),
-                SizedBox(height: 2),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [

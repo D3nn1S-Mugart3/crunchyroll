@@ -30,7 +30,7 @@ class _NavbarHomeState extends State<NavbarHome> {
   void initState() {
     super.initState();
     pages = [
-      const Home_Page(),
+      const HomePage(),
       MyListAnime(),
       const Center(child: Text("Data"),),
       MangasPDF(),
@@ -170,7 +170,7 @@ class _NavbarHomeState extends State<NavbarHome> {
         selectedItemColor: Colors.orange,
         unselectedItemColor: Colors.white,
         showUnselectedLabels: true,
-        backgroundColor: const Color.fromARGB(221, 1, 1, 1),
+        backgroundColor: Colors.grey[800],
         selectedLabelStyle: const TextStyle(fontWeight: FontWeight.normal, fontSize: 12),
         unselectedLabelStyle: const TextStyle(fontWeight: FontWeight.normal, fontSize: 12),
         type: BottomNavigationBarType.fixed, // Ensure consistent label sizes
