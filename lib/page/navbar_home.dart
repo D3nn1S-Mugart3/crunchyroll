@@ -1,12 +1,10 @@
 import 'package:crunchyroll/page/routes/home.dart';
 import 'package:crunchyroll/page/routes/mangas_pdf.dart';
-// import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:crunchyroll/page/routes/my_list.dart';
 import 'package:crunchyroll/page/routes/profile.dart';
 import 'package:crunchyroll/page/routes/simulcasts.dart';
 import 'package:flutter/services.dart';
-// import 'package:shared_preferences/shared_preferences.dart';
 
 class NavbarHome extends StatefulWidget {
   const NavbarHome({super.key});
@@ -19,20 +17,15 @@ class _NavbarHomeState extends State<NavbarHome> {
   int selectedIndex = 0;
   late List<Widget> pages;
 
-  // Future<void> _logout(BuildContext context) async {
-  //   await FirebaseAuth.instance.signOut();
-  //   final prefs = await SharedPreferences.getInstance();
-  //   await prefs.setBool('isLoggedIn', false);
-  //   Navigator.pushReplacementNamed(context, '/login');
-  // }
-
   @override
   void initState() {
     super.initState();
     pages = [
       const HomePage(),
       MyListAnime(),
-      const Center(child: Text("Data"),),
+      const Center(
+        child: Text("Data"),
+      ),
       MangasPDF(),
       SimulcastsScreen(),
       GradientScrollView(),
@@ -171,8 +164,10 @@ class _NavbarHomeState extends State<NavbarHome> {
         unselectedItemColor: Colors.white,
         showUnselectedLabels: true,
         backgroundColor: Colors.grey[800],
-        selectedLabelStyle: const TextStyle(fontWeight: FontWeight.normal, fontSize: 12),
-        unselectedLabelStyle: const TextStyle(fontWeight: FontWeight.normal, fontSize: 12),
+        selectedLabelStyle:
+            const TextStyle(fontWeight: FontWeight.normal, fontSize: 12),
+        unselectedLabelStyle:
+            const TextStyle(fontWeight: FontWeight.normal, fontSize: 12),
         type: BottomNavigationBarType.fixed, // Ensure consistent label sizes
       ),
     );

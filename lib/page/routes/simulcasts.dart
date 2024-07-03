@@ -9,15 +9,17 @@ class SimulcastsScreen extends StatefulWidget {
 }
 
 class _SimulcastsScreenState extends State<SimulcastsScreen> {
-  String selectedSeason = 'spring';
-  Future<List<Anime>>? animeList;
+  String selectedSeason = 'spring'; // Temporada seleccionada por defecto
+  Future<List<Anime>>?
+      animeList; // Lista futura de animes basadas en la temporada seleccionada
 
   @override
   void initState() {
     super.initState();
-    animeList = fetchSeasonalAnimes(selectedSeason);
+    animeList = fetchSeasonalAnimes(selectedSeason); // Cargar animes al iniciar
   }
 
+  // Función para mostrar la pantalla de selección de temporadas
   void _showSeasonsScreen() {
     Navigator.push(
       context,
@@ -26,10 +28,11 @@ class _SimulcastsScreenState extends State<SimulcastsScreen> {
           selectedSeason: selectedSeason,
           onSelectSeason: (season) {
             setState(() {
-              selectedSeason = season;
-              animeList = fetchSeasonalAnimes(selectedSeason);
+              selectedSeason = season; // Actualizar la temporada seleccionada
+              animeList = fetchSeasonalAnimes(
+                  selectedSeason); // Actualizar la lista de animes
             });
-            Navigator.pop(context);
+            Navigator.pop(context); // Cerrar la pantalla de selección
           },
         ),
       ),
@@ -41,7 +44,8 @@ class _SimulcastsScreenState extends State<SimulcastsScreen> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.black,
-        title: Text('Temporada de Simulcasts', style: TextStyle(color: Colors.white, fontSize: 20)),
+        title: Text('Temporada de Simulcasts',
+            style: TextStyle(color: Colors.white, fontSize: 20)),
         actions: <Widget>[
           IconButton(
             icon: const Icon(Icons.cast_outlined),
@@ -74,7 +78,8 @@ class _SimulcastsScreenState extends State<SimulcastsScreen> {
                 padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                 child: Row(
                   children: [
-                    Icon(Icons.arrow_drop_down_sharp, color: Colors.white, size: 24),
+                    Icon(Icons.arrow_drop_down_sharp,
+                        color: Colors.white, size: 24),
                     SizedBox(width: 6),
                     Expanded(
                       child: Text(
@@ -208,7 +213,8 @@ class AnimeCard extends StatelessWidget {
             children: <Widget>[
               ListTile(
                 leading: Icon(Icons.favorite, color: Colors.white),
-                title: Text('Añadir a favoritos', style: TextStyle(color: Colors.white)),
+                title: Text('Añadir a favoritos',
+                    style: TextStyle(color: Colors.white)),
                 onTap: () {
                   // Implementar lógica de añadir a favoritos
                   Navigator.pop(context);
@@ -232,7 +238,8 @@ class AnimeCard extends StatelessWidget {
               ),
               ListTile(
                 leading: Icon(Icons.check, color: Colors.white),
-                title: Text('Marcar como visto', style: TextStyle(color: Colors.white)),
+                title: Text('Marcar como visto',
+                    style: TextStyle(color: Colors.white)),
                 onTap: () {
                   // Implementar lógica de marcar como visto
                   Navigator.pop(context);
@@ -267,7 +274,10 @@ class AnimeCard extends StatelessWidget {
               children: [
                 Text(
                   anime.title,
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16, color: Colors.white),
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 16,
+                      color: Colors.white),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                 ),
@@ -302,20 +312,49 @@ class AnimeDetailPage extends StatelessWidget {
 
   final String seriesInfo = "Series ";
   final String seriesInfoDob = "• Dob | Sub";
-  final String availability = "Disponibilidad de subtítulos en Latinoamérica: Domingos a la 1:30 AM PST (Fora del pacifico) ...";
+  final String availability =
+      "Disponibilidad de subtítulos en Latinoamérica: Domingos a la 1:30 AM PST (Fora del pacifico) ...";
   final String details = "DETALLES DE LA SERIE";
   final String episodeSyncInfo = "Episodios sincronizados";
   final String syncedEpisodes = "5 Episodios";
   final String storageInfo = "1.2 GB";
   final String seasonInfo = "Temporada 1";
   final List<Map<String, String>> episodes = [
-    {"thumbnail": "assets/images/alicization.png", "title": "Capítulo 1", "name": "El comienzo"},
-    {"thumbnail": "assets/images/one-piece.jpg", "title": "Capítulo 2", "name": "La aventura continúa"},
-    {"thumbnail": "assets/images/Kimetsu_no_Yaiba-cover.jpg", "title": "Capítulo 2", "name": "La aventura continúa"},
-    {"thumbnail": "assets/images/alicization.png", "title": "Capítulo 2", "name": "La aventura continúa"},
-    {"thumbnail": "assets/images/alicization.png", "title": "Capítulo 2", "name": "La aventura continúa"},
-    {"thumbnail": "assets/images/alicization.png", "title": "Capítulo 2", "name": "La aventura continúa"},
-    {"thumbnail": "assets/images/alicization.png", "title": "Capítulo 2", "name": "La aventura continúa"},
+    {
+      "thumbnail": "assets/images/alicization.png",
+      "title": "Capítulo 1",
+      "name": "El comienzo"
+    },
+    {
+      "thumbnail": "assets/images/one-piece.jpg",
+      "title": "Capítulo 2",
+      "name": "La aventura continúa"
+    },
+    {
+      "thumbnail": "assets/images/Kimetsu_no_Yaiba-cover.jpg",
+      "title": "Capítulo 2",
+      "name": "La aventura continúa"
+    },
+    {
+      "thumbnail": "assets/images/alicization.png",
+      "title": "Capítulo 2",
+      "name": "La aventura continúa"
+    },
+    {
+      "thumbnail": "assets/images/alicization.png",
+      "title": "Capítulo 2",
+      "name": "La aventura continúa"
+    },
+    {
+      "thumbnail": "assets/images/alicization.png",
+      "title": "Capítulo 2",
+      "name": "La aventura continúa"
+    },
+    {
+      "thumbnail": "assets/images/alicization.png",
+      "title": "Capítulo 2",
+      "name": "La aventura continúa"
+    },
     // Agrega más episodios aquí
   ];
 
@@ -342,14 +381,19 @@ class AnimeDetailPage extends StatelessWidget {
                 children: [
                   Text(
                     animeName,
-                    style: TextStyle(color: Colors.white, fontSize: 24, fontWeight: FontWeight.bold),
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold),
                   ),
                   SizedBox(height: 8),
                   Row(
                     children: [
                       Text(
                         seriesInfo,
-                        style: TextStyle(color: const Color.fromARGB(255, 33, 243, 236), fontSize: 16),
+                        style: TextStyle(
+                            color: const Color.fromARGB(255, 33, 243, 236),
+                            fontSize: 16),
                       ),
                       Text(
                         seriesInfoDob,
@@ -361,13 +405,12 @@ class AnimeDetailPage extends StatelessWidget {
                   Row(
                     children: [
                       Icon(
-                        Icons.add, color: Colors.white,
+                        Icons.add,
+                        color: Colors.white,
                       ),
                       SizedBox(width: 4),
-                      Text(
-                        "AÑADIR A CRUNCHYLISTA",
-                        style: TextStyle(color: Colors.white)
-                      ),
+                      Text("AÑADIR A CRUNCHYLISTA",
+                          style: TextStyle(color: Colors.white)),
                     ],
                   ),
                   SizedBox(height: 8),
@@ -424,11 +467,13 @@ class AnimeDetailPage extends StatelessWidget {
                               children: [
                                 Text(
                                   episode["title"]!,
-                                  style: TextStyle(color: Colors.white, fontSize: 16),
+                                  style: TextStyle(
+                                      color: Colors.white, fontSize: 16),
                                 ),
                                 Text(
                                   episode["name"]!,
-                                  style: TextStyle(color: Colors.white54, fontSize: 14),
+                                  style: TextStyle(
+                                      color: Colors.white54, fontSize: 14),
                                 ),
                               ],
                             ),
@@ -451,7 +496,8 @@ class AnimeDetailPage extends StatelessWidget {
 
 Future<List<Anime>> fetchSeasonalAnimes(String season) async {
   final response = await http.get(
-    Uri.parse('https://api.myanimelist.net/v2/anime/season/2024/$season?limit=10'),
+    Uri.parse(
+        'https://api.myanimelist.net/v2/anime/season/2024/$season?limit=10'),
     headers: {'X-MAL-CLIENT-ID': 'f4b43c14393b157005dee233e1ea0661'},
   );
 
@@ -530,7 +576,9 @@ class _SearchPageState extends State<SearchPage> {
       ),
       backgroundColor: Colors.black,
       body: _filteredAnimes.isEmpty
-          ? Center(child: Text('No hay resultados', style: TextStyle(color: Colors.white)))
+          ? Center(
+              child: Text('No hay resultados',
+                  style: TextStyle(color: Colors.white)))
           : GridView.builder(
               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 2,

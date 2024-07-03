@@ -8,34 +8,34 @@ import 'dart:io';
 class MangasPDF extends StatelessWidget {
   final List<Anime> animeList = [
     Anime(
-      title: "One Piece", 
-      imageAsset: "assets/images/one-piece.jpg", 
-      pdfAsset: "assets/pdf/OP1099-1109.pdf"
+      title: "One Piece",
+      imageAsset: "assets/images/one-piece.jpg",
+      pdfAsset: "assets/pdf/OP1099-1109.pdf",
     ),
     Anime(
-      title: "One Piece", 
-      imageAsset: "assets/images/one-piece.jpg", 
-      pdfAsset: "assets/pdf/OP1110-1116.pdf"
+      title: "One Piece",
+      imageAsset: "assets/images/one-piece.jpg",
+      pdfAsset: "assets/pdf/OP1110-1116.pdf",
     ),
     Anime(
-      title: "One Piece", 
-      imageAsset: "assets/images/one-piece.jpg", 
-      pdfAsset: "assets/pdf/OP1117.pdf"
+      title: "One Piece",
+      imageAsset: "assets/images/one-piece.jpg",
+      pdfAsset: "assets/pdf/OP1117.pdf",
     ),
     Anime(
-      title: "One Piece", 
-      imageAsset: "assets/images/one-piece.jpg", 
-      pdfAsset: "assets/pdf/OP1099-1109.pdf"
+      title: "One Piece",
+      imageAsset: "assets/images/one-piece.jpg",
+      pdfAsset: "assets/pdf/OP1099-1109.pdf",
     ),
     Anime(
-      title: "One Piece", 
-      imageAsset: "assets/images/one-piece.jpg", 
-      pdfAsset: "assets/pdf/OP1110-1116.pdf"
+      title: "One Piece",
+      imageAsset: "assets/images/one-piece.jpg",
+      pdfAsset: "assets/pdf/OP1110-1116.pdf",
     ),
     Anime(
-      title: "One Piece", 
-      imageAsset: "assets/images/one-piece.jpg", 
-      pdfAsset: "assets/pdf/OP1117.pdf"
+      title: "One Piece",
+      imageAsset: "assets/images/one-piece.jpg",
+      pdfAsset: "assets/pdf/OP1117.pdf",
     ),
   ];
 
@@ -43,14 +43,19 @@ class MangasPDF extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Mangas"),
+        title: Text(
+          "Mangas",
+          style: TextStyle(color: Colors.white),
+        ),
+        backgroundColor: Colors.black,
       ),
+      backgroundColor: Colors.black,
       body: ListView.builder(
         itemCount: (animeList.length / 2).ceil(),
         itemBuilder: (context, index) {
           final leftAnime = animeList[index * 2];
-          final rightAnime = index * 2 < animeList.length
-              ? animeList[index *2 + 1]
+          final rightAnime = index * 2 + 1 < animeList.length
+              ? animeList[index * 2 + 1]
               : null;
 
           return Row(
@@ -94,7 +99,10 @@ class AnimeTile extends StatelessWidget {
             child: Image.asset(anime.imageAsset, width: 150),
           ),
         ),
-        Text(anime.title),
+        Text(
+          anime.title,
+          style: TextStyle(color: Colors.white),
+        ),
       ],
     );
   }
@@ -151,7 +159,12 @@ class _PdfViewerScreenState extends State<PdfViewerScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('PDF Viewer'),
+        backgroundColor: Colors.black,
+        iconTheme: IconThemeData(color: Colors.white),
+        title: Text(
+          'PDF Viewer',
+          style: TextStyle(color: Colors.white),
+        ),
         actions: [
           Padding(
             padding: const EdgeInsets.all(16.0),
@@ -162,8 +175,15 @@ class _PdfViewerScreenState extends State<PdfViewerScreen> {
               ),
             ),
           ),
+          IconButton(
+            icon: Icon(Icons.share),
+            onPressed: () async {
+              await Share.shareFiles([widget.pdfPath], text: '¡Mira este PDF!');
+            },
+          ),
         ],
       ),
+      backgroundColor: Colors.black,
       body: FutureBuilder<void>(
         future: _loadingFuture,
         builder: (context, snapshot) {
@@ -173,13 +193,13 @@ class _PdfViewerScreenState extends State<PdfViewerScreen> {
             return LayoutBuilder(
               builder: (context, constraints) {
                 return Container(
-                  color: Colors.black,
+                  color: Colors.grey,
                   padding: EdgeInsets.symmetric(vertical: 10),
                   height: constraints.maxHeight, // Limita la altura
                   child: PDFView(
                     filePath: widget.pdfPath,
-                    autoSpacing: false,
-                    pageFling: false,
+                    autoSpacing: true,
+                    pageFling: true,
                     onRender: (_pages) {
                       setState(() {
                         _totalPages = _pages!;
@@ -195,69 +215,15 @@ class _PdfViewerScreenState extends State<PdfViewerScreen> {
                       });
                     },
                     defaultPage: _currentPage - 1,
-                    pageSnap: false,
+                    pageSnap: true,
                     swipeHorizontal: false,
                   ),
-                  
                 );
               },
             );
           }
         },
       ),
-      bottomNavigationBar: _isReady
-          ? Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Slider(
-                  value: _currentPage.toDouble(),
-                  min: 1,
-                  max: _totalPages.toDouble(),
-                  divisions: _totalPages,
-                  label: 'Página $_currentPage',
-                  onChanged: (value) {
-                    setState(() {
-                      _currentPage = value.toInt();
-                    });
-                    _pdfViewController.setPage(_currentPage - 1);
-                  },
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    IconButton(
-                      icon: Icon(Icons.arrow_back),
-                      onPressed: () {
-                        if (_currentPage > 1) {
-                          _currentPage--;
-                          _pdfViewController.setPage(_currentPage - 1);
-                          setState(() {});
-                        }
-                      },
-                    ),
-                    IconButton(
-                      icon: Icon(Icons.arrow_forward),
-                      onPressed: () {
-                        if (_currentPage < _totalPages) {
-                          _currentPage++;
-                          _pdfViewController.setPage(_currentPage - 1);
-                          setState(() {});
-                        }
-                      },
-                    ),
-                  ],
-                ),
-              ],
-            )
-          : null,
-      floatingActionButton: _isReady
-          ? FloatingActionButton(
-              child: Icon(Icons.share),
-              onPressed: () async {
-                await Share.shareFiles([widget.pdfPath], text: '¡Mira este PDF!');
-              },
-            )
-          : null,
     );
   }
 }
