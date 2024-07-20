@@ -23,8 +23,8 @@ Future<Iterable<Anime>> getAnimeByRankingTypeApi({
     final animes = animeNodeList
         .where((animeNode) => animeNode['node']['main_picture'] != null)
         .map((node) {
-          return Anime.fromJson(node);
-        });
+      return Anime.fromJson(node);
+    });
 
     return animes;
   } else {

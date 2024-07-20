@@ -258,13 +258,13 @@ class AnimeCard extends StatelessWidget {
       margin: EdgeInsets.all(8.0),
       color: Colors.black,
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Expanded(
             child: Image.network(
               anime.imageUrl,
               fit: BoxFit.cover,
-              width: 147,
+              width: 160,
             ),
           ),
           Padding(
