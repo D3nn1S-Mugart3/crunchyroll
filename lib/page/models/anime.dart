@@ -17,7 +17,10 @@ class Anime {
       id: json['node']['id'],
       title: json['node']['title'],
       imageUrl: json['node']['main_picture']['medium'],
-      synopsis: json['node']['synopsis'] ?? 'No synopsis available',
+      synopsis: json['node'].containsKey('synopsis') &&
+              json['node']['synopsis'] != null
+          ? json['node']['synopsis']
+          : 'Sin sinopsis disponible',
     );
   }
 }

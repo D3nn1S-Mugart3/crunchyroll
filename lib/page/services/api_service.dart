@@ -20,6 +20,9 @@ Future<Iterable<Anime>> getAnimeByRankingTypeApi({
   if (response.statusCode == 200) {
     final Map<String, dynamic> data = jsonDecode(response.body);
     final List<dynamic> animeNodeList = data['data'];
+
+    print('Datos recibidos: ${animeNodeList.length} animes');
+
     final animes = animeNodeList
         .where((animeNode) => animeNode['node']['main_picture'] != null)
         .map((node) {
@@ -28,6 +31,7 @@ Future<Iterable<Anime>> getAnimeByRankingTypeApi({
 
     return animes;
   } else {
+    print('Error al obtener datos: ${response.body}');
     throw Exception("Failed to get data!");
   }
 }

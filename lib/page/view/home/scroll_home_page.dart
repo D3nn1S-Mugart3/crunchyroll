@@ -9,12 +9,12 @@ import 'package:flutter/material.dart';
 class ScrollHomePage extends StatelessWidget {
   const ScrollHomePage({
     super.key,
-    required Future<Iterable<Anime>> futureAnimes,
-    required Future<Iterable<Anime>> futurePopularAnimes,
-  }) : _futureAnimes = futureAnimes, _futurePopularAnimes = futurePopularAnimes;
+    required this.futureAnimes,
+    required this.futurePopularAnimes,
+  });
 
-  final Future<Iterable<Anime>> _futureAnimes;
-  final Future<Iterable<Anime>> _futurePopularAnimes;
+  final Future<Iterable<Anime>> futureAnimes;
+  final Future<Iterable<Anime>> futurePopularAnimes;
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +42,7 @@ class ScrollHomePage extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 10),
-          Recommendations(futureAnimes: _futureAnimes),
+          Recommendations(futureAnimes: futureAnimes),
           const SizedBox(height: 15),
           const VideoThumbnail(),
           const SizedBox(height: 20),
@@ -54,7 +54,7 @@ class ScrollHomePage extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 10),
-          MusicVideo(futurePopularAnimes: _futurePopularAnimes),
+          MusicVideo(futurePopularAnimes: futurePopularAnimes),
         ],
       ),
     );
