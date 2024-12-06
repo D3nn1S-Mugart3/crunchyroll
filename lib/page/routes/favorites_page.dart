@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:crunchyroll/page/models/anime.dart';
 import 'package:crunchyroll/page/database/database_helper.dart';
@@ -15,6 +17,13 @@ class _FavoritesPageState extends State<FavoritesPage> {
   @override
   void initState() {
     super.initState();
+    _favorites = DatabaseHelper().getFavorites();
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    // Actualiza la lista de favoritos cuando cambien las dependencias
     _favorites = DatabaseHelper().getFavorites();
   }
 
@@ -41,10 +50,11 @@ class _FavoritesPageState extends State<FavoritesPage> {
               itemBuilder: (context, index) {
                 final anime = snapshot.data![index];
                 return ListTile(
-                  leading: Image.network(anime.imageUrl,
-                      width: 50, height: 50, fit: BoxFit.cover),
-                  title: Text(anime.title,
-                      style: const TextStyle(color: Colors.white)),
+                  leading: _buildAnimeImage(anime.imageUrl),
+                  title: Text(
+                    anime.title,
+                    style: const TextStyle(color: Colors.white),
+                  ),
                   subtitle: Text(
                     anime.synopsis,
                     maxLines: 2,
@@ -64,11 +74,30 @@ class _FavoritesPageState extends State<FavoritesPage> {
               },
             );
           } else {
-            return const Center(child: Text('No tienes animes favoritos.'));
+            return const Center(
+              child: Text(
+                'No tienes animes favoritos.',
+                style: TextStyle(color: Colors.white),
+              ),
+            );
           }
         },
       ),
       backgroundColor: Colors.black,
     );
+  }
+
+  Widget _buildAnimeImage(String imagePath) {
+    final file = File(imagePath);
+    if (file.existsSync()) {
+      return Image.file(
+        file,
+        width: 50,
+        height: 50,
+        fit: BoxFit.cover,
+      );
+    } else {
+      return const Icon(Icons.broken_image, size: 50, color: Colors.grey);
+    }
   }
 }

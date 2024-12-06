@@ -39,11 +39,13 @@ class MangasPDF extends StatelessWidget {
     ),
   ];
 
+  MangasPDF({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
+        title: const Text(
           "Mangas",
           style: TextStyle(color: Colors.white),
         ),
@@ -86,14 +88,14 @@ class Anime {
 class AnimeTile extends StatelessWidget {
   final Anime anime;
 
-  AnimeTile({required this.anime});
+  const AnimeTile({super.key, required this.anime});
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
         Padding(
-          padding: EdgeInsets.all(10),
+          padding: const EdgeInsets.all(10),
           child: GestureDetector(
             onTap: () => _openPdf(context, anime.pdfAsset),
             child: Image.asset(anime.imageAsset, width: 150),
@@ -101,7 +103,7 @@ class AnimeTile extends StatelessWidget {
         ),
         Text(
           anime.title,
-          style: TextStyle(color: Colors.white),
+          style: const TextStyle(color: Colors.white),
         ),
       ],
     );
@@ -123,7 +125,7 @@ class AnimeTile extends StatelessWidget {
     } catch (e) {
       print('Error cargando el PDF: $e');
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Error al abrir el PDF.')),
+        const SnackBar(content: Text('Error al abrir el PDF.')),
       );
     }
   }
@@ -132,7 +134,7 @@ class AnimeTile extends StatelessWidget {
 class PdfViewerScreen extends StatefulWidget {
   final String pdfPath;
 
-  PdfViewerScreen({required this.pdfPath});
+  const PdfViewerScreen({super.key, required this.pdfPath});
 
   @override
   _PdfViewerScreenState createState() => _PdfViewerScreenState();
@@ -152,7 +154,7 @@ class _PdfViewerScreenState extends State<PdfViewerScreen> {
   }
 
   Future<void> _loadPdf() async {
-    await Future.delayed(Duration(seconds: 2)); // Espera de 2 segundos
+    await Future.delayed(const Duration(seconds: 2)); // Espera de 2 segundos
   }
 
   @override
@@ -160,8 +162,8 @@ class _PdfViewerScreenState extends State<PdfViewerScreen> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.black,
-        iconTheme: IconThemeData(color: Colors.white),
-        title: Text(
+        iconTheme: const IconThemeData(color: Colors.white),
+        title: const Text(
           'PDF Viewer',
           style: TextStyle(color: Colors.white),
         ),
@@ -171,12 +173,12 @@ class _PdfViewerScreenState extends State<PdfViewerScreen> {
             child: Center(
               child: Text(
                 _isReady ? '$_currentPage/$_totalPages' : 'Cargando...',
-                style: TextStyle(fontSize: 18),
+                style: const TextStyle(fontSize: 18),
               ),
             ),
           ),
           IconButton(
-            icon: Icon(Icons.share),
+            icon: const Icon(Icons.share),
             onPressed: () async {
               await Share.shareFiles([widget.pdfPath], text: '¡Mira este PDF!');
             },
@@ -188,21 +190,21 @@ class _PdfViewerScreenState extends State<PdfViewerScreen> {
         future: _loadingFuture,
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(child: CircularProgressIndicator());
+            return const Center(child: CircularProgressIndicator());
           } else {
             return LayoutBuilder(
               builder: (context, constraints) {
                 return Container(
                   color: Colors.grey,
-                  padding: EdgeInsets.symmetric(vertical: 10),
+                  padding: const EdgeInsets.symmetric(vertical: 10),
                   height: constraints.maxHeight, // Limita la altura
                   child: PDFView(
                     filePath: widget.pdfPath,
                     autoSpacing: true,
                     pageFling: true,
-                    onRender: (_pages) {
+                    onRender: (pages) {
                       setState(() {
-                        _totalPages = _pages!;
+                        _totalPages = pages!;
                         _isReady = true;
                       });
                     },
