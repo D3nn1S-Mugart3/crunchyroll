@@ -1,11 +1,15 @@
+import 'package:crunchyroll/page/view/my_list/offline_screen.dart';
 import 'package:flutter/material.dart';
 
 class MyListAnime extends StatefulWidget {
+  const MyListAnime({super.key});
+
   @override
   _MyListAnimeState createState() => _MyListAnimeState();
 }
 
-class _MyListAnimeState extends State<MyListAnime> with SingleTickerProviderStateMixin {
+class _MyListAnimeState extends State<MyListAnime>
+    with SingleTickerProviderStateMixin {
   late TabController _tabController;
 
   @override
@@ -25,15 +29,17 @@ class _MyListAnimeState extends State<MyListAnime> with SingleTickerProviderStat
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.black,
-        title: Text('Mis listas', style: TextStyle(color: Colors.white)),
+        title: const Text('Mis listas', style: TextStyle(color: Colors.white)),
         bottom: TabBar(
           controller: _tabController,
           labelColor: Colors.white,
           unselectedLabelColor: Colors.white60,
           indicatorColor: Colors.orange,
-          dividerColor: Color.fromARGB(255, 48, 44, 44),
-          tabs: [
-            Tab(text: 'Favoritos',),
+          dividerColor: const Color.fromARGB(255, 48, 44, 44),
+          tabs: const [
+            Tab(
+              text: 'Favoritos',
+            ),
             Tab(text: 'Crunchylistas'),
             Tab(text: 'Historial'),
             Tab(text: 'Offline'),
@@ -55,7 +61,7 @@ class _MyListAnimeState extends State<MyListAnime> with SingleTickerProviderStat
       backgroundColor: Colors.black,
       body: TabBarView(
         controller: _tabController,
-        children: [
+        children: const [
           FavoritosScreen(),
           CrunchylistasScreen(),
           HistorialScreen(),
@@ -67,6 +73,8 @@ class _MyListAnimeState extends State<MyListAnime> with SingleTickerProviderStat
 }
 
 class FavoritosScreen extends StatelessWidget {
+  const FavoritosScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -77,18 +85,21 @@ class FavoritosScreen extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(
+              const Text(
                 'Actividad reciente',
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white),
+                style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white),
               ),
               Row(
                 children: [
                   IconButton(
-                    icon: Icon(Icons.filter_list, color: Colors.white),
+                    icon: const Icon(Icons.filter_list, color: Colors.white),
                     onPressed: () {},
                   ),
                   IconButton(
-                    icon: Icon(Icons.settings, color: Colors.white),
+                    icon: const Icon(Icons.settings, color: Colors.white),
                     onPressed: () {},
                   ),
                 ],
@@ -104,7 +115,7 @@ class FavoritosScreen extends StatelessWidget {
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Container(
+                      SizedBox(
                         width: 90, // Fixed width
                         height: 130, // Increased height
                         child: Image.asset(
@@ -112,27 +123,32 @@ class FavoritosScreen extends StatelessWidget {
                           fit: BoxFit.cover, // Ensure the image covers the box
                         ),
                       ),
-                      SizedBox(width: 16), // Space between image and text
+                      const SizedBox(width: 16), // Space between image and text
                       Expanded(
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text('Nombre del Anime', style: TextStyle(color: Colors.white)),
-                            SizedBox(height: 4),
-                            Text('Comenzar a ver S1 E1', style: TextStyle(color: Colors.grey)),
-                            SizedBox(height: 4),
+                            const Text('Nombre del Anime',
+                                style: TextStyle(color: Colors.white)),
+                            const SizedBox(height: 4),
+                            const Text('Comenzar a ver S1 E1',
+                                style: TextStyle(color: Colors.grey)),
+                            const SizedBox(height: 4),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Text('Dob | Sub', style: TextStyle(color: Colors.grey)),
+                                const Text('Dob | Sub',
+                                    style: TextStyle(color: Colors.grey)),
                                 Row(
                                   children: [
                                     IconButton(
-                                      icon: Icon(Icons.favorite_border, color: Colors.white),
+                                      icon: const Icon(Icons.favorite_border,
+                                          color: Colors.white),
                                       onPressed: () {},
                                     ),
                                     IconButton(
-                                      icon: Icon(Icons.more_vert, color: Colors.white),
+                                      icon: const Icon(Icons.more_vert,
+                                          color: Colors.white),
                                       onPressed: () {},
                                     ),
                                   ],
@@ -155,9 +171,11 @@ class FavoritosScreen extends StatelessWidget {
 }
 
 class CrunchylistasScreen extends StatelessWidget {
+  const CrunchylistasScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
-    return Center(
+    return const Center(
       child: Text(
         'Crunchylistas Screen',
         style: TextStyle(fontSize: 24),
@@ -167,23 +185,13 @@ class CrunchylistasScreen extends StatelessWidget {
 }
 
 class HistorialScreen extends StatelessWidget {
+  const HistorialScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
-    return Center(
+    return const Center(
       child: Text(
         'Historial Screen',
-        style: TextStyle(fontSize: 24),
-      ),
-    );
-  }
-}
-
-class OfflineScreen extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: Text(
-        'Offline Screen',
         style: TextStyle(fontSize: 24),
       ),
     );
